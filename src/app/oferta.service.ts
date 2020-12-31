@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core'
 import { Oferta } from './shared/oferta.model'
 
 import { URL_API } from './app.api'
+import { Observable } from 'rxjs'
+import { map, retry } from 'rxjs/operators'
 
 @Injectable()
 export class OfertasService {
@@ -41,19 +43,8 @@ export class OfertasService {
             .then((resposta: any) => resposta[0].descricao)
     }
 
-    // public getOfertas2(): Promise<Oferta[]> {
-    //     return new Promise((resolve, reject) => {
-
-    //         let deu_certo = true
-    //         if (deu_certo) {
-    //             setTimeout(() => resolve(this.ofertas), 3000)
-    //         } else {
-    //             reject({ codigo_erro: 404, mensagem_erro: 'Servidor nao encontrado' })
-    //         }
-    //     })
-    //         .then((ofertas: Oferta[]) => {
-    //             console.log('primeiro then')
-    //             return ofertas
-    //         })
-    // }
+    public pesquisaOfertas(termo: string): Observable<Oferta[]>{
+        return this.http.get(`${URL_API}/ofertas?descricao_oferta_like=${termo}`)
+            .pipe(map((resposta: any) => resposta), retry(10))
+    }
 }

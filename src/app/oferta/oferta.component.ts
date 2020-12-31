@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Params } from '@angular/router'
 import { OfertasService } from '../oferta.service'
 import { Oferta } from '../shared/oferta.model'
 
@@ -13,17 +13,19 @@ export class OfertaComponent implements OnInit {
 
     public oferta: Oferta
 
-    constructor(private route: ActivatedRoute, private ofertasService: OfertasService) { }
+    constructor(
+        private route: ActivatedRoute,
+        private ofertasService: OfertasService
+    ) { }
 
     ngOnInit(): void {
-        this.ofertasService.getOfertaPorid(this.route.snapshot.params['id'])
-            .then((oferta: Oferta) => {
-                this.oferta = oferta
-                console.log(oferta)
-            })
-            .catch((param: any) => {
-                console.log(param)
-            })
-    }
 
+        this.route.params.subscribe((parametros: Params) => {
+            this.ofertasService.getOfertaPorid(parametros.id)
+                .then((oferta: Oferta) => {
+                    this.oferta = oferta
+                })
+        })
+
+    }
 }
