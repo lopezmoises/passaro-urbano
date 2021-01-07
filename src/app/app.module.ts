@@ -18,6 +18,10 @@ import { ComoUsarComponent } from './oferta/como-usar/como-usar.component';
 import { OndeFicaComponent } from './oferta/onde-fica/onde-fica.component';
 import { DescricaoReduzida } from './util/descricao-reduzida.pipe';
 import { OrdemCompraComponent } from './ordem-compra/ordem-compra.component';
+import { OrdemCompraSucessoComponent } from './ordem-compra-sucesso/ordem-compra-sucesso.component';
+//import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CarrinhoService } from './carrinho.service';
 
 
 
@@ -35,14 +39,18 @@ registerLocaleData(localePt)
         ComoUsarComponent,
         OndeFicaComponent,
         DescricaoReduzida,
-        OrdemCompraComponent
+        OrdemCompraComponent,
+        OrdemCompraSucessoComponent
     ],
     imports: [
         BrowserModule,
         HttpClientModule,
-        RouterModule.forRoot(ROUTES)
+        RouterModule.forRoot(ROUTES),
+        ReactiveFormsModule
+        //FormsModule
     ],
     providers: [
+        CarrinhoService,
         { provide: LOCALE_ID, useValue: 'pt-BR' },
         { provide: DEFAULT_CURRENCY_CODE, useValue: "BRL" }
     ],
